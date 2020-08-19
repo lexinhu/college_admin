@@ -39,5 +39,11 @@ export default {
       url: `/admin/edu/course/publish-course/${id}`,
       method: 'put'
     })
+  },
+  removeById(id) {
+    return request({
+      url: `/admin/edu/course/remove/${id}`,
+      method: 'delete'
+    })
   }
 }
