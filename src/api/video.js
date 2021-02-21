@@ -30,5 +30,13 @@ export default {
       url: `/admin/edu/video/remove/${id}`,
       method: 'delete'
     })
+  },
+
+  // 获取腾讯云点播视频上传签名
+  getSignature() {
+    return request({
+      url: '/admin/vod/media/signature',
+      method: 'get'
+    })
   }
 }

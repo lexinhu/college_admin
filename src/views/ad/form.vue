@@ -33,9 +33,6 @@
           <el-button size="small" type="primary">点击上传</el-button>
         </el-upload>
       </el-form-item>
-      <el-form-item label="背景颜色">
-        <el-color-picker v-model="ad.color"/>
-      </el-form-item>
       <el-form-item label="链接地址">
         <el-input v-model="ad.linkUrl" />
       </el-form-item>

@@ -2,33 +2,33 @@
   <div class="app-container">
     <!-- 输入表单 -->
     <el-form label-width="80px" >
-      <el-form-item label="讲师名称">
+      <el-form-item label="作者名称">
         <el-input v-model="teacher.name" />
       </el-form-item>
       <el-form-item label="入驻时间">
         <el-date-picker v-model="teacher.joinDate" value-format="yyyy-MM-dd" />
       </el-form-item>
-      <el-form-item label="讲师排序">
+      <el-form-item label="作者排序">
         <el-input-number v-model="teacher.sort" :min="0"/>
       </el-form-item>
-      <el-form-item label="讲师头衔">
+      <el-form-item label="作者头衔">
         <el-select v-model="teacher.level">
           <!--
             数据类型一定要和取出的json中的一致，否则没法回填
             因此，这里value使用动态绑定的值，保证其数据类型是number
             -->
-          <el-option :value="1" label="高级讲师"/>
-          <el-option :value="2" label="首席讲师"/>
+          <el-option :value="1" label="高级作者"/>
+          <el-option :value="2" label="首席作者"/>
         </el-select>
       </el-form-item>
-      <el-form-item label="讲师简介">
+      <el-form-item label="作者简介">
         <el-input v-model="teacher.intro"/>
       </el-form-item>
-      <el-form-item label="讲师资历">
+      <el-form-item label="作者资历">
         <el-input v-model="teacher.career" :rows="10" type="textarea"/>
       </el-form-item>
-      <!-- 讲师头像：TODO -->
-      <el-form-item label="讲师头像">
+      <!-- 作者头像：TODO -->
+      <el-form-item label="作者头像">
         <el-upload
           :show-file-list="false"
           :on-success="handleAvatarSuccess"
@@ -52,7 +52,7 @@ export default {
   data() {
     return {
       BASE_API: process.env.BASE_API,
-      // 初始化讲师默认数据
+      // 初始化作者默认数据
       teacher: {
         sort: 0,
         level: 1
@@ -76,7 +76,7 @@ export default {
         this.updateData()
       }
     },
-    // 新增讲师
+    // 新增作者
     saveData() {
     // debugger
       teacherApi.save(this.teacher).then(response => {

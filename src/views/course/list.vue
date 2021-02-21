@@ -4,7 +4,7 @@
     <el-form :inline="true" class="demo-form-inline" style="padding: 15px">
 
       <!-- 所属分类：级联列表 -->
-      <el-form-item label="课程分类" >
+      <el-form-item label="分类" >
         <div class="block">
           <el-cascader
             v-model="subjectOjt"
@@ -18,13 +18,13 @@
 
       <!-- 标题 -->
       <el-form-item>
-        <el-input v-model="searchObj.title" placeholder="课程标题" />
+        <el-input v-model="searchObj.title" placeholder="视频集标题" />
       </el-form-item>
-      <!-- 讲师 -->
+      <!-- 作者 -->
       <el-form-item>
         <el-select
           v-model="searchObj.teacherId"
-          placeholder="请选择讲师">
+          placeholder="请选择作者">
           <el-option
             v-for="teacher in teacherList"
             :key="teacher.id"
@@ -46,12 +46,12 @@
         </template>
       </el-table-column> -->
 
-      <el-table-column label="封面" align="center">
+      <el-table-column label="封面" align="center" >
         <template slot-scope="scope">
-          <img :src="scope.row.cover" alt="scope.row.title" width="100%">
+          <img :src="scope.row.cover" alt="scope.row.title" width="80%">
         </template>
       </el-table-column>
-      <el-table-column label="课程信息" align="center">
+      <el-table-column label="视频集信息" align="center">
         <template slot-scope="scope" >
           <router-link :to="'/course/info/'+scope.row.id">
             <h2>{{ scope.row.title }}</h2>
@@ -66,7 +66,7 @@
           </p>
         </template>
       </el-table-column>
-      <el-table-column label="讲师" width="80" align="center">
+      <el-table-column label="作者" width="80" align="center">
         <template slot-scope="scope">
           {{ scope.row.teacherName }}
         </template>
@@ -80,7 +80,7 @@
           <el-tag v-else>{{ scope.row.price }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="status" label="课程状态" width="100" align="center" >
+      <el-table-column prop="status" label="视频集状态" width="100" align="center" >
         <template slot-scope="scope">
           <el-tag :type="scope.row.status === 'Draft' ? 'warning' : 'success'">{{ scope.row.status === 'Draft' ? '未发布' : '已发布' }}</el-tag>
         </template>
@@ -124,22 +124,22 @@ import subjectApi from '@/api/subject'
 export default {
   data() {
     return {
-      list: [], // 课程列表
+      list: [], // 视频集列表
       total: 0, // 总记录数
       page: 1, // 页码
       limit: 10, // 每页记录数
       searchObj: {}, // 查询条件
-      teacherList: [], // 讲师列表
-      subjectList: [], // 课程分类列表
-      subjectOjt: [] // 课程分类选中
+      teacherList: [], // 作者列表
+      subjectList: [], // 分类列表
+      subjectOjt: [] // 分类选中
     }
   },
   created() {
-    // 初始化课程列表
+    // 初始化视频集列表
     this.fetchData()
     // 初始化分类列表
     this.initSubjectList()
-    // 获取讲师列表
+    // 获取作者列表
     this.initTeacherList()
   },
   methods: {
@@ -154,14 +154,14 @@ export default {
         this.teacherList = response.data.items
       })
     },
-    // 获取课程分类列表
+    // 获取分类列表
     initSubjectList() {
       subjectApi.getNestedTreeList().then(response => {
         this.subjectList = this.getTreeData(response.data.items)
       })
     },
 
-    // 去掉级联课程分类中的children空白
+    // 去掉级联分类中的children空白
     getTreeData(data) {
       // 循环遍历json数据
       for (var i = 0; i < data.length; i++) {
@@ -176,7 +176,7 @@ export default {
       return data
     },
 
-    // 课程分类id赋值
+    // 分类id赋值
     handleChange(subjectId) {
       this.searchObj.subjectParentId = subjectId[0]
       this.searchObj.subjectId = subjectId[1]
@@ -204,7 +204,7 @@ export default {
 
     // 根据id删除数据
     removeById(id) {
-      this.$confirm('此操作将永久删除该课程，以及该课程下的章节和视频，是否继续?', '提示', {
+      this.$confirm('此操作将永久删除该视频集，以及该视频集下的章节和视频，是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'

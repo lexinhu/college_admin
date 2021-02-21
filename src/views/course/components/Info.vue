@@ -1,16 +1,16 @@
 <template>
   <div class="app-container">
 
-    <!-- 课程信息表单 -->
+    <!-- 视频集信息表单 -->
     <el-form label-width="120px">
 
-      <el-form-item label="课程标题">
-        <el-input v-model="courseInfo.title" placeholder=" 示例：机器学习项目课：从基础到搭建项目视频课程。专业名称注意大小写"/>
+      <el-form-item label="视频集标题">
+        <el-input v-model="courseInfo.title" placeholder=" 示例：机器学习项目课：从基础到搭建项目视频视频集。专业名称注意大小写"/>
       </el-form-item>
 
-      <!-- 课程讲师  -->
-      <el-form-item label="课程讲师">
-        <el-select v-model="courseInfo.teacherId" placeholder="请选择讲师">
+      <!-- 视频集作者  -->
+      <el-form-item label="视频集作者">
+        <el-select v-model="courseInfo.teacherId" placeholder="请选择作者">
           <el-option
             v-for="teacher in teacherList"
             :key="teacher.value"
@@ -20,7 +20,7 @@
       </el-form-item>
 
       <!-- 所属分类  -->
-      <el-form-item label="课程分类">
+      <el-form-item label="分类">
         <div class="block">
           <el-cascader
             v-model="subjectOjt"
@@ -32,16 +32,16 @@
       </el-form-item>
 
       <el-form-item label="总课时">
-        <el-input-number :min="0" v-model="courseInfo.lessonNum" controls-position="right" placeholder="请填写课程的总课时数"/>
+        <el-input-number :min="0" v-model="courseInfo.lessonNum" controls-position="right" placeholder="请填写视频集的总课时数"/>
       </el-form-item>
 
-      <!-- 课程简介  -->
-      <el-form-item label="课程简介">
+      <!-- 视频集简介  -->
+      <el-form-item label="视频集简介">
         <tinymce :height="300" v-model="courseInfo.description"/>
       </el-form-item>
 
-      <!-- 课程封面  -->
-      <el-form-item label="课程封面">
+      <!-- 视频集封面  -->
+      <el-form-item label="视频集封面">
         <el-upload
           :show-file-list="false"
           :on-success="handleCoverSuccess"
@@ -54,8 +54,8 @@
         </el-upload>
       </el-form-item>
 
-      <el-form-item label="课程价格">
-        <el-input-number :min="0" v-model="courseInfo.price" controls-position="right" placeholder="免费课程请设置为0元"/> 元
+      <el-form-item label="视频集价格">
+        <el-input-number :min="0" v-model="courseInfo.price" controls-position="right" placeholder="免费视频集请设置为0元"/> 元
       </el-form-item>
     </el-form>
 
@@ -87,9 +87,9 @@ export default {
         cover: '',
         description: ''
       },
-      teacherList: [], // 课程讲师列表
-      subjectList: [], // 课程分类列表
-      subjectOjt: [] // 课程分类选中
+      teacherList: [], // 视频集作者列表
+      subjectList: [], // 分类列表
+      subjectOjt: [] // 分类选中
     }
   },
   created() {
@@ -126,21 +126,21 @@ export default {
       })
     },
 
-    // 获取讲师列表
+    // 获取作者列表
     initTeacher() {
       teacherApi.list().then(response => {
         this.teacherList = response.data.items
       })
     },
 
-    // 获取课程分类列表
+    // 获取分类列表
     initSubject() {
       subjectApi.getNestedTreeList().then(response => {
         this.subjectList = this.getTreeData(response.data.items)
       })
     },
 
-    // 去掉级联课程分类中的children空白
+    // 去掉级联分类中的children空白
     getTreeData(data) {
       // 循环遍历json数据
       for (var i = 0; i < data.length; i++) {
@@ -154,7 +154,7 @@ export default {
       }
       return data
     },
-    // 课程分类id赋值
+    // 分类id赋值
     handleChange(subjectId) {
       this.courseInfo.subjectParentId = subjectId[0]
       this.courseInfo.subjectId = subjectId[1]

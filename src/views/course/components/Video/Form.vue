@@ -22,19 +22,21 @@
           :on-success="handleUploadSuccess"
           :on-error="handleUploadError"
           :on-exceed="handleUploadExceed"
+          :http-request="uploadVideo"
           :file-list="fileList"
           :before-remove="handleBeforeRemove"
           :on-remove="handleOnRemove"
           :limit="1"
-          :action="BASE_API+'/admin/vod/media/upload'">
-          <el-button slot="trigger" size="small" type="primary">选择视频</el-button>
-          <el-button
-            :disabled="uploadBtnDisabled"
-            style="margin-left: 10px;"
-            size="small"
-            type="success"
-            @click="submitUpload()">上传</el-button>
+          :action="''"
+          drag>
+          <i class="el-icon-upload"/>
+          <div class="el-upload__text">将文件拖到此处，或<em>选择文件</em></div>
         </el-upload>
+        <el-button
+          :disabled="uploadBtnDisabled"
+          size="primary"
+          type="success"
+          @click="submitUpload()">点我上传<i class="el-icon-upload el-icon--right"/></el-button>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
@@ -47,6 +49,7 @@
 <script>
 import videoApi from '@/api/video'
 import vodApi from '@/api/vod'
+import TcVod from 'vod-js-sdk-v6'
 
 export default {
   data() {
@@ -58,8 +61,15 @@ export default {
       },
       fileList: [], // 上传文件列表
       uploadBtnDisabled: false,
-      BASE_API: process.env.BASE_API
+      signature: ''
     }
+  },
+
+  mounted() {
+    videoApi.getSignature().then(response => {
+      const signature = response.data.signature
+      this.signature = signature
+    })
   },
 
   methods: {
@@ -89,16 +99,49 @@ export default {
       this.$refs.upload.submit() // 提交上传请求
     },
 
-    // 视频上传成功的回调
-    handleUploadSuccess(response, file, fileList) {
-      this.uploadBtnDisabled = false
-      if (response.success) {
-        this.video.videoSourceId = response.data.videoId
-        this.video.videoOriginalName = file.name
-      } else {
-        this.$message.error('上传失败')
-      }
+    // 获取腾讯云点播视频上传签名
+    getSignature() {
+      return this.signature
     },
+
+    uploadVideo(upload) {
+      const file = upload.file
+      // const signature = this.signature
+      const tcVod = new TcVod({
+        getSignature: this.getSignature // 前文中所述的获取上传签名的函数
+      })
+      const uploader = tcVod.upload({
+        mediaFile: file // 媒体文件（视频或音频或图片），类型为 File
+      })
+      uploader.on('media_progress', function(info) {
+        console.log(info.percent) // 进度
+      })
+      uploader.done().then((doneResult) => {
+        // console.log(doneResult.fileId)
+        upload.onSuccess(doneResult.fileId, file)
+      }).catch((err) => {
+        upload.onError(err)
+      })
+    },
+
+    // 视频上传成功的回调
+    handleUploadSuccess(fileId, file) {
+      this.uploadBtnDisabled = false
+      this.video.videoSourceId = fileId
+      this.video.videoOriginalName = file.name
+    },
+
+    // // 视频上传成功的回调
+    // handleUploadSuccess(response, file, fileList) {
+    //   this.uploadBtnDisabled = false
+    //   if (response.success) {
+    //     this.video.videoSourceId = response.data.videoId
+    //     this.video.videoOriginalName = file.name
+    //   } else {
+    //     this.$message.error('上传失败')
+    //   }
+    // },
+
     // 失败回调
     handleUploadError() {
       this.uploadBtnDisabled = false

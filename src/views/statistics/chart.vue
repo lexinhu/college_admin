@@ -64,8 +64,8 @@ export default {
         this.chartData = response.data.chartData
         this.showChartByType('register_num', '学员登录数统计', this.chartData.registerNum)
         this.showChartByType('login_num', '学员注册数统计', this.chartData.loginNum)
-        this.showChartByType('video_view_num', '课程播放数统计', this.chartData.videoViewNum)
-        this.showChartByType('course_num', '每日课程数统计', this.chartData.courseNum)
+        this.showChartByType('video_view_num', '视频集播放数统计', this.chartData.videoViewNum)
+        this.showChartByType('course_num', '每日视频集数统计', this.chartData.courseNum)
       })
     },
 

@@ -1,14 +1,14 @@
 <template>
   <div class="app-container">
 
-    <!--课程预览-->
+    <!--视频集预览-->
     <div class="ccInfo" >
       <img :src="coursePublish.cover">
       <div class="main" >
         <h2>{{ coursePublish.title }}</h2>
         <p class="gray"><span>共{{ coursePublish.lessonNum }}课时</span></p>
         <p><span>所属分类：{{ coursePublish.subjectParentTitle }} — {{ coursePublish.subjectTitle }}</span></p>
-        <p>课程讲师：{{ coursePublish.teacherName }}</p>
+        <p>视频集作者：{{ coursePublish.teacherName }}</p>
         <h3 class="red">￥{{ coursePublish.price }}</h3>
       </div>
 
@@ -28,7 +28,7 @@
 
     <div style="text-align:center">
       <el-button type="primary" @click="prev()">上一步</el-button>
-      <el-button :disabled="publishBtnDisabled" type="primary" @click="publish()">发布课程</el-button>
+      <el-button :disabled="publishBtnDisabled" type="primary" @click="publish()">发布视频集</el-button>
     </div>
   </div>
 </template>
@@ -51,7 +51,7 @@ export default {
   },
 
   methods: {
-    // 获取课程发布信息
+    // 获取视频集发布信息
     fetchCoursePublishById(id) {
       courseApi.getCoursePublishById(id).then(response => {
         this.coursePublish = response.data.item
@@ -94,9 +94,8 @@ export default {
 .ccInfo img {
     background: #d6d6d6;
     width: 100%;
-    height: 50%;
     display: block;
-    float: left;
+    margin: 0 auto;
     border: none;
 }
 .ccInfo .main {

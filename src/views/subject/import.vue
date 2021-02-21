@@ -42,7 +42,7 @@ export default {
   data() {
     return {
       BASE_API: process.env.BASE_API,
-      defaultExcelTemplate: process.env.OSS_PATH + '/excel/课程分类列表模板.xls', // 默认Excel模板
+      defaultExcelTemplate: process.env.OSS_PATH + '/subject-example.xls', // 默认Excel模板
       importBtnDisabled: false // 导入按钮是否禁用
     }
   },

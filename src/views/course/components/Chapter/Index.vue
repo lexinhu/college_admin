@@ -156,7 +156,7 @@ export default {
 .chapterList p{
   float: left;
   font-size: 20px;
-  margin: 10px 0;
+  margin: 5px 0;
   padding: 10px;
   height: 70px;
   line-height: 50px;

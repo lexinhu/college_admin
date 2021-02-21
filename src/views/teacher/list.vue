@@ -8,15 +8,15 @@
           :fetch-suggestions="querySearch"
           :trigger-on-focus="false"
           class="inline-input"
-          placeholder="讲师姓名"
+          placeholder="作者姓名"
           value-key="name" />
       </el-form-item>
 
       <el-form-item>
         <el-select v-model="searchObj.level" clearable placeholder="头衔">
           <el-option value=" " label=" "/>
-          <el-option value="1" label="高级讲师"/>
-          <el-option value="2" label="首席讲师"/>
+          <el-option value="1" label="高级作者"/>
+          <el-option value="2" label="首席作者"/>
         </el-select>
       </el-form-item>
 
@@ -53,8 +53,8 @@
       <el-table-column prop="name" label="名称" width="90" align="center"/>
       <el-table-column label="头衔" width="100" align="center">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.level === 1" type="success" size="mini">高级讲师</el-tag>
-          <el-tag v-if="scope.row.level === 2" size="mini">首席讲师</el-tag>
+          <el-tag v-if="scope.row.level === 1" type="success" size="mini">高级作者</el-tag>
+          <el-tag v-if="scope.row.level === 2" size="mini">首席作者</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="intro" label="简介" align="center"/>
@@ -150,7 +150,7 @@ export default {
         this.multipleSelection.push(item.id)
       })
     },
-    // 批量删除讲师
+    // 批量删除作者
     batchRemove() {
       if (this.multipleSelection.length === 0) {
         this.$message.warning('请选择要删除的记录！')
