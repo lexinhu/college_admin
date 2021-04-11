@@ -34,7 +34,7 @@
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload"
           :on-error="handleAvatarError"
-          :action="BASE_API+'/admin/oss/file/upload?module=avatar'"
+          :action="BASE_API+'admin/oss/file/upload?module=avatar'"
           class="avatar-uploader">
           <img v-if="teacher.avatar" :src="teacher.avatar" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"/>

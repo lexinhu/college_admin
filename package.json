@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "axios": "0.18.0",
+    "cnpm": "^6.1.1",
     "echarts": "^4.5.0",
     "element-ui": "2.4.6",
     "js-cookie": "2.2.0",
@@ -51,7 +52,6 @@
     "html-webpack-plugin": "4.0.0-alpha",
     "mini-css-extract-plugin": "0.4.1",
     "node-notifier": "5.2.1",
-    "node-sass": "^4.7.2",
     "optimize-css-assets-webpack-plugin": "5.0.0",
     "ora": "3.0.0",
     "path-to-regexp": "2.4.0",
